@@ -104,15 +104,20 @@ namespace GUI
 
         private async void btnUpdateProduct_Click(object sender, EventArgs e)
         {
+            var allSuccess = true;
+        
             foreach (var item in productBindingList)
             {
                 var isSucess = await _apiClient.UpdateProduct(item);
 
                 if (!isSucess)
-                    MessageBox.Show("Doslo je do greske prilikom azuriranja");
+                    allSuccess = false;
             }
 
-            MessageBox.Show("Uspesno azuriranje");
+            if (allSuccess)
+                MessageBox.Show("Usepsno azuriranje");
+            else
+                MessageBox.Show("Neuspesno azuriranje");
 
             dgProducts.Refresh();
         }
